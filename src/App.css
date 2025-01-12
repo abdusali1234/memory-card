@@ -1,0 +1,108 @@
+@font-face {
+  font-family: "retro_gamingregular";
+  src: url("src/assets/retro_gaming-webfont.woff2") format("woff2"),
+    url("src/assets/retro_gaming-webfont.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+:root {
+  --bg-colour-1: #ffeebd;
+  --bg-colour-2: #ffd54a;
+  --border-colour: #e6a452;
+  --shadow-color: 45deg 43% 54%;
+  --shadow-elevation-medium: 0.3px 0.5px 0.7px hsl(var(--shadow-color) / 0.36),
+    0.8px 1.6px 2px -0.8px hsl(var(--shadow-color) / 0.36),
+    2.1px 4.1px 5.2px -1.7px hsl(var(--shadow-color) / 0.36),
+    5px 10px 12.6px -2.5px hsl(var(--shadow-color) / 0.36);
+  --shadow-elevation-high: 0.3px 0.5px 0.7px hsl(var(--shadow-color) / 0.34),
+    1.5px 2.9px 3.7px -0.4px hsl(var(--shadow-color) / 0.34),
+    2.7px 5.4px 6.8px -0.7px hsl(var(--shadow-color) / 0.34),
+    4.5px 8.9px 11.2px -1.1px hsl(var(--shadow-color) / 0.34),
+    7.1px 14.3px 18px -1.4px hsl(var(--shadow-color) / 0.34),
+    11.2px 22.3px 28.1px -1.8px hsl(var(--shadow-color) / 0.34),
+    17px 33.9px 42.7px -2.1px hsl(var(--shadow-color) / 0.34),
+    25px 50px 62.9px -2.5px hsl(var(--shadow-color) / 0.34);
+}
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#root {
+  font-family: "retro_gamingregular";
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100vw;
+  background-color: var(--bg-colour-1);
+}
+
+#pokemon-card-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  row-gap: 1em;
+  column-gap: 1em;
+  padding: 1em;
+}
+
+#game-over-dialog {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  -ms-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  border-radius: 1em;
+  background-color: var(--bg-colour-1);
+  box-shadow: var(--shadow-elevation-high);
+}
+
+#game-over-dialog > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+button {
+  background-color: var(--bg-colour-2);
+  border: solid;
+  border-radius: 0.5em;
+}
+
+.pokemon-card {
+  width: 10em;
+  height: 10em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--bg-colour-2);
+  border-radius: 1em;
+  border-width: 0.25em;
+  border-style: solid;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.pokemon-card:hover {
+  transform: scale(1.05);
+  border-color: var(--border-colour);
+  box-shadow: var(--shadow-elevation-medium);
+}
+
+.pokemon-card img {
+  height: 8em;
+  width: 8em;
+  transition: transform 0.2s ease;
+}
+
+.pokemon-card:hover img {
+  transform: scale(1.15);
+}

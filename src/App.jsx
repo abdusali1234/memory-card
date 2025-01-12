@@ -69,7 +69,7 @@ function App() {
           const data = await response.json();
           return {
             ...pokemon,
-            imageUrl: data.sprites.other.dream_world.front_default,
+            imageUrl: data.sprites.front_default,
             name: pokemon.name[0].toUpperCase() + pokemon.name.slice(1),
           };
         })
@@ -85,7 +85,7 @@ function App() {
     getPokemonData();
   }, []);
 
-  function checkGameStatus(pokemonId) {
+  function handleGame(pokemonId) {
     if (selectedPokemonIds.includes(pokemonId) == true) {
       setModalDialogMessage(() => "Game Over!");
       document.querySelector("#game-over-dialog").showModal();
@@ -95,7 +95,7 @@ function App() {
       setCurrScore((currScore) => currScore + 1);
       setPokemonData(() => shuffle(pokemonData));
       if (currScore == 8) {
-        setModalDialogMessage(() => "You won!");
+        setModalDialogMessage(() => "You Won!");
         document.querySelector("#game-over-dialog").showModal();
       }
     }
@@ -115,16 +115,23 @@ function App() {
   return (
     <>
       <Modal message={modalDialogMessage} handleChange={resetGame}></Modal>
+      <h1>Pokemon Memory Game!</h1>
+      <h2>
+        Get points by cliking on an image, but make sure you only click an image
+        once!
+      </h2>
       <div id="score-container">
-        Current Score: {currScore} | Best Score: {bestScore}
+        <h3>
+          Current Score: {currScore} | Best Score: {bestScore}
+        </h3>
       </div>
 
-      <div className="pokemon-card-grid">
+      <div id="pokemon-card-grid">
         {pokemonData.map((pokemon) => (
           <Card
             {...pokemon}
             key={pokemon.id}
-            handleChange={() => checkGameStatus(pokemon.id)}
+            handleChange={() => handleGame(pokemon.id)}
           ></Card>
         ))}
       </div>

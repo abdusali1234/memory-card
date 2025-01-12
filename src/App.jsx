@@ -5,6 +5,12 @@ import "./App.css";
 
 function App() {
   // Some cool pokemon from when I was a wee lad
+  const [pokemonData, setPokemonData] = useState([]);
+  const [selectedPokemonIds, setSelectedPokemonIds] = useState([]);
+  const [currScore, setCurrScore] = useState(0);
+  const [bestScore, setBestScore] = useState(0);
+  const [modalDialogMessage, setModalDialogMessage] = useState("");
+
   const pokemons = [
     {
       id: 0,
@@ -44,8 +50,6 @@ function App() {
     },
   ];
 
-  const [pokemonData, setPokemonData] = useState([]);
-
   function shuffle(arr) {
     let shuffled = arr
       .map((val) => ({ val, sort: Math.random() }))
@@ -81,16 +85,10 @@ function App() {
     getPokemonData();
   }, []);
 
-  const [selectedPokemonIds, setSelectedPokemonIds] = useState([]);
-  const [currScore, setCurrScore] = useState(0);
-  const [bestScore, setBestScore] = useState(0);
-  const [modalDialogMessage, setModalDialogMessage] = useState("");
-
   function checkGameStatus(pokemonId) {
-    if (selectedPokemonIds.includes(pokemonId)) {
-      console.log(selectedPokemonIds);
+    if (selectedPokemonIds.includes(pokemonId) == true) {
       setModalDialogMessage(() => "Game Over!");
-      console.log(modalDialogMessage);
+      document.querySelector("#game-over-dialog").showModal();
     } else {
       setSelectedPokemonIds((prev) => [...prev, pokemonId]);
       console.log(selectedPokemonIds);
@@ -98,6 +96,7 @@ function App() {
       setPokemonData(() => shuffle(pokemonData));
       if (currScore == 8) {
         setModalDialogMessage(() => "You won!");
+        document.querySelector("#game-over-dialog").showModal();
       }
     }
   }
@@ -110,13 +109,16 @@ function App() {
     setSelectedPokemonIds(() => []);
     setModalDialogMessage(() => "");
     setPokemonData(() => shuffle(pokemonData));
+    document.querySelector("#game-over-dialog").close();
   }
 
   return (
     <>
-      {modalDialogMessage && (
-        <Modal message={modalDialogMessage} handleChange={resetGame}></Modal>
-      )}
+      <Modal message={modalDialogMessage} handleChange={resetGame}></Modal>
+      <div id="score-container">
+        Current Score: {currScore} | Best Score: {bestScore}
+      </div>
+
       <div className="pokemon-card-grid">
         {pokemonData.map((pokemon) => (
           <Card
